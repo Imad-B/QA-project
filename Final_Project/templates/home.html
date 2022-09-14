@@ -1,0 +1,85 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-6"></div>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="card card-body">
+            <form action="/add_vehicle" method="POST">
+
+                <div class="form-group">
+                    <input type="text" name="make" placeholder="Make" class="form-control">                    
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="model" placeholder="Model" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" name="registration" placeholder="Registration number" class="form-control">
+                </div>
+
+            
+
+                <div class="form-group">
+                    <select name="location" id="location" style="width: 1250px"  >
+                        <option disabled hidden selected >Select Location</option>
+                        <option value="1">Garage 1</option>
+                        <option value="2">Garage 2</option>
+                        <option value="3">Garage 3</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        Save
+                    </button>
+                </div>                
+                             
+                            
+            </form>
+
+        </div>
+    <div class="col-md-8">
+        <table class="table table-striped table-bordered bg-grey table-sm">
+            <thead>
+                <tr>
+                    <td>Make</td>
+                    <td>Model</td>
+                    <td>Registration</td>
+                    <td>Location</td>
+                    <td>Operations</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                    <tr>
+                        <td>{{ vehicle.1 }}</td>
+                        <td>{{ vehicle.2 }}</td>
+                        <td>{{ vehicle.3 }}</td>
+                        <td>{{ vehicle.4 }}</td>
+                        <td>
+                            <a href="/edit/{{vehicle.0}}" class="btn btn-secondary">Edit</a>
+                            <a href="/delete/{{vehicle.0}}" class="btn btn-danger btn-delete">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}
